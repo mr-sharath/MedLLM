@@ -32,54 +32,6 @@ cd medllm
 pip install -r requirements.txt
 ```
 
-## 📂 Usage
-
-### 1. Dataset Loading
-
-```python
-from datasets import load_dataset
-dataset = load_dataset("your_dataset_name")
-```
-
-### 2. Tokenization and Model Setup
-
-```python
-from transformers import AutoTokenizer, AutoModelForCausalLM
-tokenizer = AutoTokenizer.from_pretrained("distilgpt2")
-model = AutoModelForCausalLM.from_pretrained("distilgpt2")
-```
-
-### 3. Training Loop
-
-```python
-from transformers import Trainer, TrainingArguments
-training_args = TrainingArguments(
-    output_dir="./results",
-    num_train_epochs=3,
-    per_device_train_batch_size=4,
-    per_device_eval_batch_size=4,
-    warmup_steps=500,
-    weight_decay=0.01,
-    logging_dir="./logs",
-    logging_steps=10,
-)
-trainer = Trainer(
-    model=model,
-    args=training_args,
-    train_dataset=dataset["train"],
-    eval_dataset=dataset["validation"],
-)
-trainer.train()
-```
-
-### 4. Text Generation
-
-```python
-inputs = tokenizer("Sample input text", return_tensors="pt")
-outputs = model.generate(inputs["input_ids"])
-print(tokenizer.decode(outputs[0], skip_special_tokens=True))
-```
-
 ## 📜 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
